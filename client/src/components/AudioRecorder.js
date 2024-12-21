@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Box, Button, Typography, Alert, LinearProgress } from '@mui/material';
 import { useInterview } from '../contexts/InterviewContext';
@@ -30,7 +31,7 @@ function AudioRecorder({ onComplete }) {
   }, []);
 
   const cleanup = () => {
-    if (mediaRecorderRef.current?.state === 'recording') {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
       mediaRecorderRef.current.stop();
     }
     if (streamRef.current) {
