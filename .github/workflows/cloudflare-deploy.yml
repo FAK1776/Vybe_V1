@@ -22,33 +22,16 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd client
+          cd workers/vybe-api
           npm install
-          cd ../workers/vybe-api
-          npm install
-
-      - name: Build Client
-        run: |
-          cd client
-          npm run build
-        env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: 'workers/vybe-api'
-          secrets: |
-            OPENAI_API_KEY
+          command: deploy
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: vybe-interview
-          directory: client/build
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }} 
