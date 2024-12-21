@@ -52,15 +52,15 @@ function logRequest(request: Request, response: Response, startTime: number, ext
 }
 
 // Error tracking function
-function trackError(error: any, request: Request, context: string) {
+function trackError(error: unknown, request: Request, context: string) {
 	const errorData = {
 		timestamp: new Date().toISOString(),
 		type: 'error',
 		context: context,
 		error: {
-			message: error.message,
-			stack: error.stack,
-			name: error.name
+			message: error instanceof Error ? error.message : String(error),
+			stack: error instanceof Error ? error.stack : undefined,
+			name: error instanceof Error ? error.name : 'UnknownError'
 		},
 		request: {
 			url: request.url,
@@ -279,11 +279,11 @@ export default {
 					return apiResponse;
 				} catch (error) {
 					console.error('Transcription error:', error);
-					const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+					const errorMessage = error instanceof Error ? error.message : String(error);
 					const response = new Response(JSON.stringify({ 
 						error: 'Transcription failed',
 						details: errorMessage,
-						timestamp: new Date().toISOString()
+							timestamp: new Date().toISOString()
 					}), {
 						status: 500,
 						headers: {
@@ -305,10 +305,12 @@ export default {
 			updateMetrics(Date.now() - startTime, false);
 			return response;
 
-		} catch (error) {
+		} catch (error: unknown) {
 			trackError(error, request, 'api_error');
+			const errorMessage = error instanceof Error ? error.message : String(error);
 			const response = new Response(JSON.stringify({ 
 				error: 'Internal Server Error',
+				details: errorMessage,
 				requestId: startTime.toString()
 			}), {
 				status: 500,
@@ -318,9 +320,9 @@ export default {
 				}
 			});
 			logRequest(request, response, startTime, { 
-				error: error.message,
-				errorType: error.name,
-				stackTrace: error.stack
+				error: errorMessage,
+				errorType: error instanceof Error ? error.name : 'UnknownError',
+				stackTrace: error instanceof Error ? error.stack : undefined
 			});
 			updateMetrics(Date.now() - startTime, false);
 			return response;
