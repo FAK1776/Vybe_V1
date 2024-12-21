@@ -1,0 +1,24 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "vybe-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+route = "api.vybe-interview.pages.dev/*"
+
+[env.production.vars]
+ENVIRONMENT = "production"
+
+# Cache configuration
+[cache]
+browser_TTL = 3600
+edge_TTL = 3600
+
+# Enable smart placement for optimal performance
+[placement]
+mode = "smart"
+
+# Enable logs for monitoring
+[observability]
+enabled = true

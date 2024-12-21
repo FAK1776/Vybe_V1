@@ -1,0 +1,24 @@
+{
+  "name": "vybe-interview",
+  "build": {
+    "command": "npm run build",
+    "directory": "build",
+    "environment": {
+      "NODE_VERSION": "20",
+      "REACT_APP_API_URL": "https://vybe-api.sq1776.workers.dev/api"
+    }
+  },
+  "routes": [
+    {
+      "pattern": "/api/*",
+      "forward": {
+        "service": "vybe-api"
+      }
+    },
+    {
+      "pattern": "/*",
+      "serve": "/index.html",
+      "status": 200
+    }
+  ]
+} 

@@ -1,0 +1,10 @@
+{
+  "name": "interview-prep-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build:client": "cd client && npm install && npm run build",
+    "build:functions": "cd functions && npm install",
+    "build": "npm run build:client && npm run build:functions",
+    "deploy": "firebase deploy"
+  }
+} 
