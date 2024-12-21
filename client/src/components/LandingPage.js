@@ -42,7 +42,7 @@ function LandingPage() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            Vybe Work.
+            Vybe Work
           </Typography>
           <Typography 
             variant="h2" 
@@ -52,7 +52,7 @@ function LandingPage() {
               fontWeight: 400 
             }}
           >
-            Get a job you can vybe with
+            Get the gig you can vybe with
           </Typography>
         </Box>
 
