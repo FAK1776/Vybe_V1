@@ -12,7 +12,6 @@
  */
 
 import { OpenAI } from 'openai';
-import { Buffer } from 'buffer';
 
 interface Env {
 	OPENAI_API_KEY: string;
@@ -246,7 +245,7 @@ export default {
 					}
 
 					// Convert base64 to buffer
-					const buffer = Buffer.from(audio, 'base64');
+					const buffer = Uint8Array.from(atob(audio), c => c.charCodeAt(0));
 					const tempFile = new File([buffer], 'audio.webm', { type: 'audio/webm' });
 
 					console.log('Processing audio data:', {
