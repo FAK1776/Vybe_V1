@@ -41,7 +41,7 @@ function LandingPage() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            Ace Your Next Interview
+            Vybe Work.
           </Typography>
           <Typography 
             variant="h2" 
@@ -51,7 +51,7 @@ function LandingPage() {
               fontWeight: 400 
             }}
           >
-            AI-powered interview preparation that adapts to you
+            Get a job you can vybe with
           </Typography>
         </Box>
 
@@ -63,9 +63,10 @@ function LandingPage() {
             maxWidth: 800,
             p: 4,
             borderRadius: 4,
-            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            backgroundColor: 'background.paper',
             backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
+            border: '1px solid',
+            borderColor: 'divider'
           }}
         >
           <Stack spacing={4}>
@@ -123,9 +124,11 @@ function LandingPage() {
               py: 2,
               borderRadius: 3,
               fontSize: '1.1rem',
-              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+              background: (theme) => 
+                `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.info.main} 90%)`,
               '&:hover': {
-                background: 'linear-gradient(45deg, #1976D2 30%, #1CB5E0 90%)',
+                background: (theme) => 
+                  `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.info.dark} 90%)`,
               }
             }}
           >
@@ -142,8 +145,12 @@ function LandingPage() {
               borderRadius: 3,
               fontSize: '1.1rem',
               borderWidth: 2,
+              borderColor: 'secondary.main',
+              color: 'secondary.main',
               '&:hover': {
                 borderWidth: 2,
+                borderColor: 'secondary.dark',
+                backgroundColor: 'rgba(168, 94, 255, 0.08)',
               }
             }}
           >
@@ -169,8 +176,9 @@ function LandingPage() {
                   sx={{
                     p: 2,
                     borderRadius: 2,
-                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)'
+                    backgroundColor: 'background.paper',
+                    border: '1px solid',
+                    borderColor: 'divider'
                   }}
                 >
                   <Typography>{feature}</Typography>
