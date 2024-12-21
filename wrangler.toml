@@ -2,13 +2,10 @@ name = "vybe-interview"
 type = "javascript"
 account_id = "f6079b48536414d3f838166e38f55d52"
 workers_dev = true
-route = ""
-zone_id = ""
+compatibility_date = "2023-10-01"
 
 [env.production]
-name = "vybe-interview-production"
-workers_dev = false
-route = "<YOUR_PRODUCTION_ROUTE>"
+route = "your-domain.com/*"
 zone_id = "01b2db42c2e3898c83357cc587480fe9"
 
 # Add the entry-point script

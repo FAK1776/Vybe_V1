@@ -12,9 +12,27 @@
  */
 
 import { OpenAI } from 'openai';
+import { Buffer } from 'buffer';
 
 interface Env {
 	OPENAI_API_KEY: string;
+}
+
+interface QuestionRequest {
+	jobDescription: string;
+	resume?: string;
+	previousResponses: string[];
+}
+
+interface EvaluateRequest {
+	question: string;
+	response: string;
+	duration: number;
+	jobDescription: string;
+}
+
+interface TranscribeRequest {
+	audio: string;
 }
 
 // Enhanced logging with request details
@@ -118,7 +136,7 @@ export default {
 					return response;
 				}
 
-				const { jobDescription, resume, previousResponses } = await request.json();
+				const { jobDescription, resume, previousResponses } = await request.json<QuestionRequest>();
 				
 				console.log('Generating question for job description:', jobDescription.substring(0, 100));
 				
@@ -171,7 +189,7 @@ export default {
 					return response;
 				}
 
-				const { question, response: answer, duration, jobDescription } = await request.json();
+				const { question, response: answer, duration, jobDescription } = await request.json<EvaluateRequest>();
 				
 				console.log('Evaluating response for question:', question.substring(0, 100));
 				
@@ -191,9 +209,9 @@ export default {
 
 				const apiResponse = new Response(JSON.stringify({ 
 					feedback: {
-						strengths: evaluation.choices[0].message.content.split('\n')[0],
-						weaknesses: evaluation.choices[0].message.content.split('\n')[1],
-						opportunities: evaluation.choices[0].message.content.split('\n')[2]
+						strengths: evaluation.choices[0].message.content ? evaluation.choices[0].message.content.split('\n')[0] || '' : '',
+						weaknesses: evaluation.choices[0].message.content ? evaluation.choices[0].message.content.split('\n')[1] || '' : '',
+						opportunities: evaluation.choices[0].message.content ? evaluation.choices[0].message.content.split('\n')[2] || '' : ''
 					}
 				}), {
 					headers: {
@@ -221,7 +239,7 @@ export default {
 				}
 
 				try {
-					const { audio } = await request.json();
+					const { audio } = await request.json<TranscribeRequest>();
 					
 					if (!audio) {
 						throw new Error('No audio data provided');
