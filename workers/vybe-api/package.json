@@ -7,13 +7,16 @@
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "test": "vitest",
+    "build": "tsc",
     "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "openai": "^4.77.0"
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.5.2",
     "@cloudflare/workers-types": "^4.20241218.0",
     "@types/node": "^22.10.2",
-    "openai": "^4.77.0",
     "typescript": "^5.5.2",
     "vitest": "2.1.8",
     "wrangler": "^3.60.3"
